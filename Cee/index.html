@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparent Image Slideshow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Makes Website transparent for OBS */
+        body {
+            background-color: transparent;
+        }
+        .slideshow-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body class="bg-transparent font-sans text-white">
+    <div class="slideshow-container">
+        <!-- Image container -->
+        <div class="relative w-full aspect-square">
+            <img id="slideshow-image" class="w-full h-full object-contain rounded-xl shadow-lg transition-opacity duration-1000 ease-in-out opacity-0" src="" alt="Slideshow Image">
+        </div>
+        <!-- Artist's name container -->
+        <div class="mt-4 px-4 py-2 bg-black/50 rounded-lg">
+            <p id="artist-name" class="text-xl font-bold"></p>
+        </div>
+    </div>
+
+    <script>
+        // Use window.onload to ensure the DOM is ready before fetching the data
+        window.onload = function() {
+            const imageEl = document.getElementById('slideshow-image');
+            const artistEl = document.getElementById('artist-name');
+            let images = [];
+            let currentIndex = 0;
+
+            //
+            function updateSlideshow() {
+                // fade-out transition for the current image
+                imageEl.classList.remove('opacity-100');
+                imageEl.classList.add('opacity-0');
+
+                // Set a timeout to change the source after the fade-out completes (1000ms)
+                setTimeout(() => {
+                    if (images.length === 0) return; // Prevent errors if images array is empty
+                    const currentImage = images[currentIndex];
+                    imageEl.src = currentImage.image_url;
+                    artistEl.textContent = currentImage.Artist;
+
+                    // Once the new image loads, start the fade-in transition
+                    imageEl.onload = () => {
+                        imageEl.classList.remove('opacity-0');
+                        imageEl.classList.add('opacity-100');
+                    };
+
+                    // Move to the next image in the array, looping back to the start
+                    currentIndex = (currentIndex + 1) % images.length;
+                }, 1000); // This delay must match the CSS transition duration
+            }
+
+
+            // Fetch the JSON data
+            fetch('CeeFanArtReel.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error');
+                    }
+                    return response.json();
+                })
+                .then(jsonData => {
+                    images = Object.values(jsonData);
+                    if (images.length > 0) {
+                        updateSlideshow();
+                        // Set the interval to automatically change images every 7 seconds (7000 milliseconds)
+                        setInterval(updateSlideshow, 5000);
+                    } else {
+                        console.error("The JSON file is empty or formatted incorrectly.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error with fetching:', error);
+                    artistEl.textContent = 'loading images.';
+                });
+        };
+    </script>
+</body>
+</html>
