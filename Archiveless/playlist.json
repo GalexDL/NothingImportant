@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Juicy",
+        "artist": "DAOKO",
+        "album": "Dragalia Album",
+        "src": "https://github.com/GalexDL/NothingImportant/raw/refs/heads/main/Archiveless/Juicy.mp3",
+        "cover": "https://raw.githubusercontent.com/GalexDL/NothingImportant/refs/heads/main/Archiveless/cover.webp"
+    },
+    {
+        "title": "Song Title 2",
+        "artist": "Artist Name 2",
+        "album": "Album Name 2",
+        "src": "music/song2.mp3",
+        "cover": "album_art/Xenoblade_Chronicles_3.jpg"
+    },
+    {
+        "title": "Song Title 3",
+        "artist": "Artist Name 3",
+        "album": "Album Name 3",
+        "src": "music/song3.mp3",
+        "cover": "album_art/Xenoblade_Chronicles_3.jpg"
+    }
+]
