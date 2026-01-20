@@ -1,23 +1,35 @@
-[
-    {
-        "title": "Juicy",
-        "artist": "DAOKO",
-        "album": "Dragalia Album",
-        "src": "https://github.com/GalexDL/NothingImportant/raw/refs/heads/main/Archiveless/Juicy.mp3",
-        "cover": "https://raw.githubusercontent.com/GalexDL/NothingImportant/refs/heads/main/Archiveless/cover.webp"
-    },
-    {
-        "title": "Song Title 2",
-        "artist": "Artist Name 2",
-        "album": "Album Name 2",
-        "src": "music/song2.mp3",
-        "cover": "album_art/Xenoblade_Chronicles_3.jpg"
-    },
-    {
-        "title": "Song Title 3",
-        "artist": "Artist Name 3",
-        "album": "Album Name 3",
-        "src": "music/song3.mp3",
-        "cover": "album_art/Xenoblade_Chronicles_3.jpg"
-    }
-]
+{
+    "name": "Dragalia Lost OST",
+    "gameslist": ["Dragalia Lost"],
+    "playlist_cover": "https://raw.githubusercontent.com/GalexDL/NothingImportant/refs/heads/main/Archiveless/cover.webp",
+    "share_link": "https://example.com/playlist/raw/playlist.json",
+    "tracks": [
+        {
+            "title": "Juicy",
+            "artist": "Daoko",
+            "album": "Dragalia Lost Album",
+            "src": "https://github.com/GalexDL/NothingImportant/raw/refs/heads/main/Archiveless/Juicy.mp3",
+            "tags": ["Copyright"],
+            "gamelist": "Dragalia Lost",
+            "cover": "https://raw.githubusercontent.com/GalexDL/NothingImportant/refs/heads/main/Archiveless/cover.webp"
+        },
+        {
+            "title": "Song Title 2",
+            "artist": "Artist Name 2",
+            "album": "Album Name 2",
+            "src": "music/song2.mp3",
+            "tags": [""],
+            "gamelist": "Xenoblade Chronicles 3",
+            "cover": ""
+        },
+        {
+            "title": "Song Title 3",
+            "artist": "Artist Name 3",
+            "album": "Album Name 3",
+            "src": "music/song3.mp3",
+            "tags": ["Copyright"],
+            "gamelist": "Xenoblade Chronicles 3",
+            "cover": "album_art/Xenoblade_Chronicles_3.jpg"
+        }
+    ]
+}
