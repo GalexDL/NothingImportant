@@ -27,72 +27,92 @@
 <body class="bg-transparent font-sans text-white">
     <div class="slideshow-container">
         <!-- Image container -->
-        <div class="relative w-full aspect-square">
-            <img id="slideshow-image" class="w-full h-full object-contain rounded-xl shadow-lg transition-opacity duration-1000 ease-in-out opacity-0" src="" alt="Slideshow Image">
-        </div>
-        <!-- Artist's name container -->
-        <div class="mt-4 px-4 py-2 bg-black/50 rounded-lg">
-            <p id="artist-name" class="text-xl font-bold" style="font-size:100px;"></p>
+        <div class="w-full flex flex-col items-center">
+            <img id="slideshow-image" style="max-width:100%; max-height:60vh; height:auto;" class="object-contain shadow-lg transition-opacity duration-1000 ease-in-out opacity-0" src="" alt="Slideshow Image">
+            <!-- Artist's name container -->
+            <div class="mt-2 px-4 py-2 bg-black/50 rounded-lg w-fit">
+                <p id="artist-name" class="text-xl font-bold" style="font-size:32px;"></p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Use window.onload to ensure the DOM is ready before fetching the data
         window.onload = function() {
+                        // Get hex color from URL hash (e.g., #Hex-FF0000)
+                        function getTextColorFromHash() {
+                            const hash = window.location.hash;
+                            const match = hash.match(/^#Hex-([A-Fa-f0-9]{6})$/);
+                            if (match) {
+                                return `#${match[1]}`;
+                            }
+                            return null;
+                        }
             const imageEl = document.getElementById('slideshow-image');
             const artistEl = document.getElementById('artist-name');
             let images = [];
             let currentIndex = 0;
 
-            //
+            const JSON_FILE_PATH = 'CeeFanArtReel.json';
+            const DISPLAY_DURATION_MS = 5000;
+            const TRANSITION_DURATION_MS = 1000;
+
             function updateSlideshow() {
-                // fade-out transition for the current image
                 imageEl.classList.remove('opacity-100');
                 imageEl.classList.add('opacity-0');
 
-                // Set a timeout to change the source after the fade-out completes (1000ms)
                 setTimeout(() => {
-                    if (images.length === 0) return; // Prevent errors if images array is empty
+                    if (images.length === 0) return;
                     const currentImage = images[currentIndex];
                     imageEl.src = currentImage.image_url;
                     artistEl.textContent = currentImage.Artist;
 
-                    // Once the new image loads, start the fade-in transition
+                    // Set text color from URL hash if present
+                    const color = getTextColorFromHash();
+                    artistEl.style.color = color ? color : '';
+
                     imageEl.onload = () => {
                         imageEl.classList.remove('opacity-0');
                         imageEl.classList.add('opacity-100');
                     };
-
-                    // Move to the next image in the array, looping back to the start
                     currentIndex = (currentIndex + 1) % images.length;
-                }, 1000); // This delay must match the CSS transition duration
+                }, TRANSITION_DURATION_MS);
             }
 
-
             // Fetch the JSON data
-            fetch('CeeFanArtReel.json')
+            fetch(JSON_FILE_PATH)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Error');
+                        throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
                 .then(jsonData => {
-                    images = Object.values(jsonData);
+                    // jsonData is an object with keys IMG1, IMG2, ...
+                    for (const key in jsonData) {
+                        if (jsonData.hasOwnProperty(key)) {
+                            const entry = jsonData[key];
+                            if (entry.Artist && entry.image_url) {
+                                images.push({
+                                    Artist: entry.Artist,
+                                    image_url: entry.image_url
+                                });
+                            }
+                        }
+                    }
+
                     if (images.length > 0) {
                         updateSlideshow();
-                        // Set the interval to automatically change images every 7 seconds (7000 milliseconds)
-                        setInterval(updateSlideshow, 5000);
+                        setInterval(updateSlideshow, DISPLAY_DURATION_MS + TRANSITION_DURATION_MS);
                     } else {
                         console.error("The JSON file is empty or formatted incorrectly.");
+                        artistEl.textContent = 'No images found.';
                     }
                 })
                 .catch(error => {
-                    console.error('Error with fetching:', error);
-                    artistEl.textContent = 'loading images.';
+                    console.error('Error with fetching or parsing:', error);
+                    artistEl.textContent = 'Error loading images.';
                 });
         };
     </script>
 </body>
 </html>
-
