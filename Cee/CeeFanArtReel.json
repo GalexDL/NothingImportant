@@ -1,18 +1,26 @@
 {
   "IMG1": {
-    "Artist": "Tony",
-    "image_url": "https://media.discordapp.net/attachments/1368440644057694208/1414135651833741403/Untitled15_20250906232417.png?ex=68c1c3b4&is=68c07234&hm=3fac3d47c1159ef4d28c827816633af5952331848fcfe18fe68a1359b40db7e6&=&format=webp&quality=lossless&width=939&height=939"
+    "Artist": "Galex",
+    "image_url": "https://cdn.discordapp.com/attachments/1468774268237123808/1468793750003122197/Untitled_Artwork.png?ex=69855046&is=6983fec6&hm=03a68a12bc395342fbcf6b81f2ec84ff20c5c47bc255ef1bfc494f16eba60bbc&"
   },
   "IMG2": {
-    "Artist": "Tony",
-    "image_url": "https://media.discordapp.net/attachments/1368440644057694208/1414009945153605785/Untitled16_20250906130244.png?ex=68c1f761&is=68c0a5e1&hm=926af98fd10486167f484bb446f4c3948cd9e429f17f2854c685298c1f52d782&=&format=webp&quality=lossless&width=664&height=939"
+    "Artist": "Galex",
+    "image_url": "https://cdn.discordapp.com/attachments/1468774268237123808/1468793709091885130/Untitled_Artwork.png?ex=6985503d&is=6983febd&hm=abccb26615a224a0ce61b1e406b52ba5de3f329511cbc1448c644135016bf461&"
   },
-    "IMG3": {
-    "Artist": "Tonyy",
-    "image_url": "https://media.discordapp.net/attachments/1368440644057694208/1410335082673082489/IMG_20250827_144555590.jpg?ex=68c1c7e6&is=68c07666&hm=503058f5d5610c025c16df57d6ea29d35edc94a0cd72728a9c9f0eee0a303446&=&format=webp&width=708&height=939"
-  },  
+  "IMG3": {
+    "Artist": "Galex",
+    "image_url": "https://cdn.discordapp.com/attachments/1468774268237123808/1468793617840738388/Untitled_Artwork.png?ex=69855027&is=6983fea7&hm=e22cc58a0af07d1a77c73a3f82692f6c9ebdeeb6370999e502b385dee0398d56&"
+  },
   "IMG4": {
-    "Artist": "Penn",
-    "image_url": "https://media.discordapp.net/attachments/1368440644057694208/1405258764311068783/IMG_20250813_143411156.jpg?ex=68c1c535&is=68c073b5&hm=84371ed4aa045a13bfc2a42b1a6b1e73eb79308a4267c01f35570c22453293d5&=&format=webp&width=669&height=889"
+    "Artist": "Galex",
+    "image_url": "https://cdn.discordapp.com/attachments/1468774268237123808/1468775893911732316/combined_32.webp?ex=69853fa5&is=6983ee25&hm=1398b8869ce422e2410b13d33f92767ab1e6b281441e508774e1a843df688863&"
+  },
+  "IMG5": {
+    "Artist": "Galex",
+    "image_url": "https://cdn.discordapp.com/attachments/1468774268237123808/1468774385442881690/DreamnexusYT1.png?ex=69853e3d&is=6983ecbd&hm=70c9d8482f38952b4f25aeb7e23f0a056df55be86bdd4d1b5e3cae65bfa4c24e&"
+  },
+  "IMG6": {
+    "Artist": "Galex",
+    "image_url": "https://cdn.discordapp.com/attachments/1468774268237123808/1468774358787952803/bg.jpg?ex=69853e37&is=6983ecb7&hm=c45b9ac7e3dc4a45745d02f3a2883e54125be7e8093ed080b9877131fc360368&"
   }
- }
+}
