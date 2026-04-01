@@ -63,6 +63,9 @@
             const SPECIAL_IMAGE_URL = 'cielknows.webp';
             const SPECIAL_IMAGE_ARTIST = '???';
             const SPECIAL_IMAGE_EVERY = 5;
+            const SPECIAL_IMAGE_2_URL = 'cielknows2.webp';
+            const SPECIAL_IMAGE_2_ARTIST = '???';
+            const SPECIAL_IMAGE_2_EVERY = 20;
             const audioEl = new Audio();
             audioEl.preload = 'auto';
             let audioLoopStarted = false;
@@ -76,7 +79,8 @@
                     const currentImage = images[currentIndex];
                     imageEl.src = currentImage.image_url;
                     artistEl.textContent = currentImage.Artist;
-                    imageEl.style.filter = currentImage.image_url === SPECIAL_IMAGE_URL ? 'none' : 'invert(100%)';
+                    const isFilterImmune = currentImage.image_url === SPECIAL_IMAGE_URL || currentImage.image_url === SPECIAL_IMAGE_2_URL;
+                    imageEl.style.filter = isFilterImmune ? 'none' : 'invert(100%)';
 
                     // Set text color from URL hash if present
                     const color = getTextColorFromHash();
@@ -166,13 +170,22 @@
                         }
                     }
 
-                    images = insertSpecialImageEveryN(
+                    const imagesWithFirstSpecial = insertSpecialImageEveryN(
                         baseImages,
                         {
                             Artist: SPECIAL_IMAGE_ARTIST,
                             image_url: SPECIAL_IMAGE_URL
                         },
                         SPECIAL_IMAGE_EVERY
+                    );
+
+                    images = insertSpecialImageEveryN(
+                        imagesWithFirstSpecial,
+                        {
+                            Artist: SPECIAL_IMAGE_2_ARTIST,
+                            image_url: SPECIAL_IMAGE_2_URL
+                        },
+                        SPECIAL_IMAGE_2_EVERY
                     );
 
                     if (images.length > 0) {
