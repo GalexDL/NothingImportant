@@ -58,6 +58,9 @@
             const JSON_FILE_PATH = 'CeeFanArtReel.json';
             const DISPLAY_DURATION_MS = 5000;
             const TRANSITION_DURATION_MS = 1000;
+            const SPECIAL_IMAGE_URL = 'cielknows.webp';
+            const SPECIAL_IMAGE_ARTIST = '???';
+            const SPECIAL_IMAGE_EVERY = 5;
 
             function updateSlideshow() {
                 imageEl.classList.remove('opacity-100');
@@ -68,6 +71,7 @@
                     const currentImage = images[currentIndex];
                     imageEl.src = currentImage.image_url;
                     artistEl.textContent = currentImage.Artist;
+                    imageEl.style.filter = currentImage.image_url === SPECIAL_IMAGE_URL ? 'none' : 'invert(100%)';
 
                     // Set text color from URL hash if present
                     const color = getTextColorFromHash();
@@ -81,6 +85,21 @@
                 }, TRANSITION_DURATION_MS);
             }
 
+            function insertSpecialImageEveryN(baseImages, specialImage, everyN) {
+                if (!Number.isInteger(everyN) || everyN <= 0) {
+                    return baseImages;
+                }
+
+                const merged = [];
+                for (let i = 0; i < baseImages.length; i++) {
+                    merged.push(baseImages[i]);
+                    if ((i + 1) % everyN === 0) {
+                        merged.push(specialImage);
+                    }
+                }
+                return merged;
+            }
+
             // Fetch the JSON data
             fetch(JSON_FILE_PATH)
                 .then(response => {
@@ -91,17 +110,27 @@
                 })
                 .then(jsonData => {
                     // jsonData is an object with keys IMG1, IMG2, ...
+                    const baseImages = [];
                     for (const key in jsonData) {
                         if (jsonData.hasOwnProperty(key)) {
                             const entry = jsonData[key];
                             if (entry.Artist && entry.image_url) {
-                                images.push({
+                                baseImages.push({
                                     Artist: entry.Artist,
                                     image_url: entry.image_url
                                 });
                             }
                         }
                     }
+
+                    images = insertSpecialImageEveryN(
+                        baseImages,
+                        {
+                            Artist: SPECIAL_IMAGE_ARTIST,
+                            image_url: SPECIAL_IMAGE_URL
+                        },
+                        SPECIAL_IMAGE_EVERY
+                    );
 
                     if (images.length > 0) {
                         updateSlideshow();
