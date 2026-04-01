@@ -58,9 +58,14 @@
             const JSON_FILE_PATH = 'CeeFanArtReel.json';
             const DISPLAY_DURATION_MS = 5000;
             const TRANSITION_DURATION_MS = 1000;
+            const AUDIO_FILES = ['1.mp3', '2.mp3'];
+            const AUDIO_INTERVAL_MS = 60000;
             const SPECIAL_IMAGE_URL = 'cielknows.webp';
             const SPECIAL_IMAGE_ARTIST = '???';
             const SPECIAL_IMAGE_EVERY = 5;
+            const audioEl = new Audio();
+            audioEl.preload = 'auto';
+            let audioLoopStarted = false;
 
             function updateSlideshow() {
                 imageEl.classList.remove('opacity-100');
@@ -100,6 +105,44 @@
                 return merged;
             }
 
+            function playRandomAudio() {
+                if (AUDIO_FILES.length === 0) return Promise.resolve();
+
+                const randomFile = AUDIO_FILES[Math.floor(Math.random() * AUDIO_FILES.length)];
+                if (!audioEl.paused) {
+                    audioEl.pause();
+                }
+                audioEl.src = randomFile;
+                audioEl.currentTime = 0;
+                return audioEl.play();
+            }
+
+            async function startAudioLoop() {
+                if (audioLoopStarted) return;
+
+                try {
+                    await playRandomAudio();
+                    audioLoopStarted = true;
+                    setInterval(() => {
+                        playRandomAudio().catch(error => {
+                            console.warn('Audio playback blocked or failed:', error);
+                        });
+                    }, AUDIO_INTERVAL_MS);
+                } catch (error) {
+                    console.warn('Autoplay blocked. Waiting for user interaction.', error);
+                }
+            }
+
+            function setupAudioUnlock() {
+                const unlockAudio = () => {
+                    startAudioLoop();
+                };
+
+                ['click', 'touchstart', 'keydown'].forEach(eventName => {
+                    window.addEventListener(eventName, unlockAudio, { once: true });
+                });
+            }
+
             // Fetch the JSON data
             fetch(JSON_FILE_PATH)
                 .then(response => {
@@ -135,6 +178,8 @@
                     if (images.length > 0) {
                         updateSlideshow();
                         setInterval(updateSlideshow, DISPLAY_DURATION_MS + TRANSITION_DURATION_MS);
+                        setupAudioUnlock();
+                        startAudioLoop();
                     } else {
                         console.error("The JSON file is empty or formatted incorrectly.");
                         artistEl.textContent = 'No images found.';
